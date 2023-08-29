@@ -1,0 +1,240 @@
+/**
+
+@mainpage Nautilus documentation
+@verbatim
+-----------------------------------------------------------------------
+  #     #     #     #     #  #######  ###  #        #     #   #####   
+  ##    #    # #    #     #     #      #   #        #     #  #     #  
+  # #   #   #   #   #     #     #      #   #        #     #  #        
+  #  #  #  #     #  #     #     #      #   #        #     #   #####   
+  #   # #  #######  #     #     #      #   #        #     #        #  
+  #    ##  #     #  #     #     #      #   #        #     #  #     #  
+  #     #  #     #   #####      #     ###  #######   #####    #####   
+-----------------------------------------------------------------------
+                           ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~|^"~~~~~~~~~~~~~~~~~~~~~~~~~o~~~~~~~~~~~
+       o                   |                  o      __o
+        o                  |                 o     |X__>
+      ___o                 |                __o
+    (X___>--             __|__            |X__>     o
+                        |     \                   __o
+                        |      \                |X__>
+ _______________________|_______\________________
+<                                                \____________   _
+ \                                                            \ (_)
+  \    O       O       O                                       >=)
+   \__________________________________________________________/ (_)
+
+                           ___
+                          / o \
+                     __   \   /   _
+                       \__/ | \__/ \
+                      \___//|\\___/\
+                       ___/ | \___
+                            |     \
+                           /
+@endverbatim
+
+@tableofcontents
+
+@section section1 Introduction
+
+A fast 1D gas-grain chemical model by FH (2008). Based upon the OSU gas-grain chemical model. Updated from gg_osu_2006v1d by RTG/VW. 
+Rate equations from Hasegawa & Herbst (1992). Modified rates following Caselli et al. (1998)\n\n
+Stiff solver for sparse Jacobians: LSODES/ODEPACK (Hindmarsh 1983)\n
+Turbulent mixing implemented through first order operator splitting\n
+
+The simulation binary is <b>nautilus</b>. The binary to be used for ASCII output generation is <b>nautilus_outputs</b>.
+
+@section section_example How To Use
+A folder containing an example simulation is available in example_simulation/
+
+To use the code, my advice would be to have one folder for the code, in a specific location. Then, in another location, you can 
+create as many folders as you want, with one specific simulation in each folder. 
+
+In my case, I always put my programs in a folder named <b>~/bin</b>. 
+Then, to easily access your program, you can modify your commandline preferences by editing your bash profile <b>~/.bashrc</b>. 
+
+To easily go to your program directory via : 
+@verbatim
+cd $nautilus
+@endverbatim
+add the following line to your bash profile : 
+@code
+export nautilus="$HOME/bin/nautilus"
+@endcode
+
+To launch Nautilus wherever you want in your server via : 
+@verbatim
+nautilus
+@endverbatim
+add the following line to your bash profile : 
+@code
+alias nautilus="$HOME/bin/nautilus/nautilus"
+@endcode
+
+Keep in mind that typing
+@verbatim
+> cd -
+@endverbatim
+in your Terminal, you will go back to the previous directory (not the parent one, the previous one). Typing this command several 
+times allow you to switch easily between two folders.
+
+@section section_commands Basic commands
+
+Compile <b>nautilus</b>
+@code
+Makefile.py
+@endcode
+
+See all compilation options
+@code
+Makefile.py help
+@endcode
+
+Compile <b>nautilus_outputs</b>
+@code
+Makefile.py output
+@endcode
+
+Generate Doxygen documentation (all errors will be stored in a <b>doxygen.log</b> file)
+@code
+doxygen doxygen.conf 2>doxygen.log
+@endcode
+
+@section section_input Input files
+
+Input files have a <b>*.in</b> extension. All parameters file can have comments, either a full line or the end of a line. The comment character being the '!' character. 
+Blanck lines are ignored
+
+@li <b>parameters.in</b> : parameter file of the code, with various flags
+@li <b>abundances.in</b> : Give initial abundances for a set of species (a reduced number or all. Default minimum values are applied 
+for those that do not exist in this file.
+@li <b>element.in</b> : name and mass in AMU of all elemental species existing in the simulation
+@li <b>gas_reactions.in</b> : Reaction that occurs in gas phase
+@li <b>gas_species.in</b> : species that are involved in gas phase reactions
+@li <b>grain_reactions.in</b> : Reactions that occurs on grain surface
+@li <b>grain_species.in</b> : Species that are involved in grain surface reactions
+@li <b>activation_energies.in</b> : Activation energy for endothermic reactions
+@li <b>surface_parameters.in</b> : various energies and parameters for diffusion and movements on the grain surface
+
+@section section_output Output files
+<b>*.out</b> files are output files. <b>*.tmp</b> files are file that are generated at each timestep, either to continue a 
+simulation or check if there is a problem
+
+<b>*.ab</b> files are ASCII files generated by nautilus_outputs from the binaries <b>abundances.*.out</b>. 
+One file per species in a folder named <b>ab</b>. 
+
+@li <b>abundances.*.out</b> : writing in binary format the abundances of all species at each timestep (one file per timestep-output)
+@li <b>abundances.tmp</b> : writing in ASCII format the abundances of all species at the current timestep-output
+@li <b>rates.*.out</b> : writing in binary format the critical reactions rates
+@li <b>info.out</b> : writing information on the code, in particular about the code version (commit ID and branch)
+@li <b>species.out</b> : Writing the list of species and their corresponding index
+@li <b>elemental_abundances.tmp/out</b> : writing information about prime elements, their total abundances and mass
+
+@section section_errors Errors
+
+Error  1: Missing input file.
+       
+Error  2: Species name in reaction do not match expected list of species
+       
+Error  3: More elements than NB_PRIME_ELEMENTS
+       
+Error  4: When reordering reactions, it seems that some reactions misses or not expected
+       
+Error  5: In parameter file, IS_DIFFUSIVITY has a value that is not recognized by the code
+       
+Error  6: The number of prime elements in input files *_species.in do not match with the real one coming from element.in
+       
+Error  7: The file "time_evolution.dat" does not exist.
+       
+Error  8: Grain temperature cannot be read from "structure_evolution.dat" if the "structure_evolution" flag is not activated.
+       
+Error  9: IS_STRUCTURE_EVOLUTION has an undefined value. 
+
+Error 10: GRAIN_TEMPERATURE_TYPE is not 'table' and the grain temperature column exist in 'structure_evolution.dat'. 
+
+Error 11: Error in subroutine DICHO of dust_temperature.f90: the sign of the function doesn't change in the interval:"
+
+Error 12: OUTPUT_TYPE has an undefined value. 
+
+Error 13: A species is expected to be on grains (starting with 'J'), but is not.
+
+Error 14: One species have no production or destruction reaction.
+
+Error 15: One reaction is not well defined (either prime elements or electric charge, or temperature range).
+
+Error 16: At least one reaction has alpha = 0, please change alpha or comment the reaction.
+
+Error 17: Two reactions with the same ID have different reactants or product, or incompatible temperature ranges
+
+Error 18: One gas species has no grain equivalent
+
+Error 19: One gas species has no adsorption reaction (ITYPE=99)
+
+Error 20: One surface species has no desorption reaction (either ITYPE=15,16,66,67)
+
+Error 21: STRUCTURE_TYPE has a value that is not defined in the code
+
+Error 22: In 0D, we can't have 1D_sample>1
+
+Error 23: You can't have 1D structure and time evolution (read from a data file) of that structure at the same time.
+
+Error 24: Problem occured while inside the sorting array procedure 'get_sorted_index'
+
+Error 25: The file where 1D data are expected doesn't exist.
+
+@section section_itype Reactions Types
+
+ITYPE 0: Gas phase reactions with GRAINS
+
+ITYPE 1: Photodissoc/ionisation with cosmic rays
+
+ITYPE 2: Gas phase photodissociations/ionisations by secondary UV photons generated by CR
+
+ITYPE 3: Gas phase photodissociations/ionisations by UV
+
+ITYPE 4-8: Bimolecular gas phase reactions - several possible formula 
+
+ITYPE 10-11: H2 formation on the grains when IS_GRAIN_REACTIONS eq 0
+
+ITYPE 14: Grain surface reactions
+
+ITYPE 15: Thermal evaporation
+
+ITYPE 16: Cosmic-ray evaporation
+
+ITYPE 17: Photodissociations by Cosmic rays on grain surfaces
+
+ITYPE 18: Photodissociations by Cosmic rays on grain surfaces
+
+ITYPE 19-20: Photodissociations by UV photons on grain surfaces
+
+ITYPE 21: Grain surface reactions
+
+ITYPE 66: Photodesorption by external UV
+
+ITYPE 67: Photodesorption by CR generated UV
+
+ITYPE 98: storage of H2S under a refractory form
+
+ITYPE 99: Adsorption on grains
+
+@section section_warning Warnings
+A lot of warnings are launched by the ODEPACK files. Some of them are more problematic than others that are just deprecated feature 
+(even though this is a problem for readability). 
+
+The most problematic is a call of DPREP in the subroutine DIPREP, in opkda1. 
+
+The error returned is the following:
+@verbatim
+LYH), RWORK(LSAVF), RWORK(LEWT), RWORK(LACOR), IA, JA, IC, JC, RWORK(LWM), RWOR
+                                                                           1                              
+Error: Type mismatch in argument 'iwk' at (1); passed REAL(8) to INTEGER(4)
+opkda1.f90:1214.93:
+
+, RWORK(LYH), RWORK(LSAVF), RWORK(LEWT), RWORK(LACOR), IA, JA, RWORK(LWM), RWOR
+                                                                           1                  
+Error: Type mismatch in argument 'iwk' at (1); passed REAL(8) to INTEGER(4)
+@endverbatim
+*/

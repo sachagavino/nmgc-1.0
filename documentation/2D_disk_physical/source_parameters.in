@@ -1,0 +1,18 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Input parameter file with the parameters for the source
+! used by disk_structure.f90
+!
+ref_radius =                 1.000D+02    ; reference radius for parametric laws:
+central_mass =               1.054D+33    ; mass of the central star in g
+Tmidplan_ref =               1.500D+01    ; mid-plan temperature at the reference radius
+Tatmos_ref =                 3.000D+01    ; atmospheric temperature at the reference radius (where z=4H)
+UV_ref =                     4.100D+02    ; total UV field from the central star at the reference radius
+q =                          5.000D-01    ; exponent for the radial variation of temperature (Origin?)
+sigma =                      2.000D+00    ; stiffness of the temperature profile
+surface_density_ref =        7.500D-01    ; this is the surface density at the reference radius in g.cm-2 (Origin?)
+surface_density_exponent =   1.500D+00    ; exponent for the radial variation of the density (Origin?)
+small_grains =               1.000D-05    ; radius of small grains 
+big_grains =                 1.000D-05    ; radius of big grains
+dtogm_up =                   1.000D-02    ; gas to dust mass ratio in the upper part 
+transition_altitude =        0.000D+00    ; altitude where small grains become big
+initial He =                 9.000D-02    ; Ab of Helium used in the model -> remove He from dtogm

@@ -1,0 +1,54 @@
+Notice to create the full chemical model in 2D for protoplanetary disks
+V. Wakelam Feb 2017
+
+We have developed a series of fortran and shell procedure to set up the full chemical model 
+in 2D for protoplanetary disks. Nautilus will run the chemistry in the vertical direction 
+at each radius. The explanations of the physical model can be found in the notice directory.
+
+This series contains:
+
+- disk_structure.f90 is a fortran code to compute the 1D vertical physical structure for 
+protoplanetary disks. The disk 2D structure is obtained by computing vertical profiles at 
+several radial points. 
+This code has been modified at the beginning of 2017 in order to create the vertical 
+profiles at several radius at the same time. It was also converted from IDL to fortran to 
+avoid funding problems (IDL is not free). 
+
+- source_parameters.in is an input file for disk_structure.f90.
+
+- creation.sh is a shell used to create the various directories corresponding to the 
+different radius. Then it copies the chemical files and the physical structure in each 
+directory.
+
+- run_disk.sh is a shell to run each model one after the other. 
+
+To create and run a 2D chemical model you need to:
+
+1) Create a directory where you will put everything (for instance 'model1'). 
+2) Inside 'model1', put creation.sh and run_disk.sh. Create a directory 'physical_structure'.
+3) Inside 'physical_structure' put 'disk_structure.f90', 'source_parameters.in', 
+the 'parameter.in' file you want to use.
+4) Change the 'source_parameters.in' file according to your scientific case.
+5) Compile and run 'disk_structure.f90': 
+	gfortran -o disk_structure disk_structure.f90
+	./disk_structure
+This will create a number of files of the type '001AU.txt' containing the vertical 
+physical structure at requested each radius. If you want to change the radius, you have 
+to look inside the fortran code. Another type of files are generated: 
+'parameters_001AU.txt'. These files are the same as 'parameter.in' (input file for 
+nautilus) only the uv_flux was changed according to the radius. 
+6) Inside 'model1', create a directory called 'Initial_files' where you put all the 
+chemical files needed (abundances.in, activation_energies.in, element.in, 
+gas_reactions.in, gas_species.in, grain_reactions.in, grain_species.in, 
+surface_parameters.in).
+7) In 'model1', run 'creation.sh':
+./creation.sh
+8) In 'model1', run the codes:
+./run_disk.sh
+
+If you have changed the radius in 'disk_structure.f90', change 'creation.sh' and 
+'run_disk.sh' accordingly. 
+
+
+
+
