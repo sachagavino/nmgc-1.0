@@ -5,5 +5,5 @@ WARNING: This is ugly but please, use python 2.7 to compile, for now.
 
 ### UPDATES August 2023:
 - 0D models now works in multi-grain mode.
-- The approximation for the UV factor is removed so that 1D models can be something else than a disk.
+- 1D models can now be something else than a disk.
 - parameters.in file is simplified. Expect more updates soon.
