@@ -1224,7 +1224,7 @@ abCO(1:nb_grains) = 0.d0
     local_flux(:)   = 0.D0
     call compute_molopacity
     call compute_local_flux
-    call compute_photorates
+    call compute_photorates !photorate with cross-sections.
   endif
 
   !------------------------------------------------------------
