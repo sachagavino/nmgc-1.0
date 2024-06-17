@@ -1404,6 +1404,8 @@ abCO(1:nb_grains) = 0.d0
 
 
 !------------------------------------------------------------
+!> @author: 
+!> Sacha Gavino
 !
 !      --- COMPUTATION OF PHOTORATES USING CROSS-SECTION 
 !          FORMALISM (see Heays et al. 2017 and documentation)
@@ -1455,7 +1457,7 @@ abCO(1:nb_grains) = 0.d0
 !> @author: 
 !> Sacha Gavino
 !
-!> @date 2020
+!> @date 2022
 !
 !  (97) Gas-phase equivalent H2 formation
 !

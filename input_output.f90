@@ -655,7 +655,7 @@ if ((STRUCTURE_TYPE.eq.'1D_no_diff').or.(STRUCTURE_TYPE.eq.'1D_diff')) then
     allocate(nb_sites_per_grain(nb_grains))
     nb_sites_per_grain(1:nb_grains) = 0.d0
     
-    ! we do not read 1D_grain_sizes.in or 0D_grain_sizes.in, values are read from 1D_static.dat file
+    ! we do not read 1D_grain_sizes.in or 0D_grain_sizes.in, values are read from 1D_static.dat files
     grain_radii(:)=grain_radius                   !assigning value from parameter.in file, just to be sure that variable has some value 
     CR_PEAK_GRAIN_TEMP_all(:)=cr_peak_grain_temp  !assigning value from parameter.in file
     grain_temp(:)= initial_dust_temperature       !assigning value from parameter.in file
@@ -957,7 +957,7 @@ if (isDefined) then
       !  read(value, '(i4)') nb_grains
 
       case('multi_grain')
-        read(value, '(i2)') multi_grain
+        read(value, '(i2)') multi_grain 
 
       case('is_grain_reactions', 'IDUST') ! The old name is kept for compatibility reasons
         read(value, '(i2)') IS_GRAIN_REACTIONS

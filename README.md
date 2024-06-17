@@ -6,4 +6,4 @@ This repository contains the full NMGC package (Ruaud et al. 2016; Iqbal & Wakel
 - 0D models now works in multi-grain mode.
 - 1D models can now be something else than a disk.
 - parameters.in file is simplified.
-- UV field is added in static. parameters.in is changed accordingly.
+- UV field is added in static. parameters.in file is changed accordingly.

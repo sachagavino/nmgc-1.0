@@ -194,6 +194,10 @@ endif
 
 if (STRUCTURE_TYPE.eq.'0D') then
 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! added to change the initial way of computing MRN distribution
+! sacha Gavino (2024)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   if(multi_grain.eq.0) then
     GTODN(1)=(4.d0*PI*GRAIN_DENSITY*grain_radii(1)*grain_radii(1)*grain_radii(1))/(3.d0*initial_dtg_mass_ratio*AMU)
     abundances(INDGRAIN(i),1:spatial_resolution) = 1.0 / GTODN(i)
