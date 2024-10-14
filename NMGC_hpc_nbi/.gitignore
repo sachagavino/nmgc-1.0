@@ -1,0 +1,4 @@
+*.mod
+*.o
+.DS_Store
+*.dSYM
