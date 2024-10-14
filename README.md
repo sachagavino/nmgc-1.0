@@ -1,4 +1,4 @@
-# Nautilus Multi Grain Code (NMGC); version 2.2.0 (May 2024)
+# Previous version of Nautilus Multi Grain Code (NMGC); version 1.0.0 (May 2024)
 This repository contains the full NMGC package (Ruaud et al. 2016; Iqbal & Wakelam 2018, Gavino et al. 2021).
  
 
